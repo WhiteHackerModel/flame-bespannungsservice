@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "DEIN_API_KEY",
-  authDomain: "DEIN_PROJECT.firebaseapp.com",
-  databaseURL: "https://DEIN_PROJECT.firebaseio.com",
-  projectId: "DEIN_PROJECT",
-  storageBucket: "DEIN_PROJECT.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID"
+  apiKey: "AIzaSyDU7kEP21xWlS9jWpRlEbE97XbOa-LjUOA",
+  authDomain: "flame-bespannungsservice.firebaseapp.com",
+  databaseURL: "...",
+  projectId: "flame-bespannungsservice",
+  storageBucket: "flame-bespannungsservice.firebasestorage.app",
+  messagingSenderId: "1039827014465",
+  appId: "1:1039827014465:web:66d5688132434bdb17c7c0"
 };
 firebase.initializeApp(firebaseConfig);
 
