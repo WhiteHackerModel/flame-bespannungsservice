@@ -7,7 +7,7 @@ Website + Admin Dashboard für Badmintonbespannungen.
 - Admins: Alle Bestellungen einsehen, bearbeiten, löschen
 - Admins können Bespannt, Bezahlt, Datum Bespannung setzen
 - Startseite zeigt aktuelle Anzahl bespannter Rackets
-(- Kunden gesperrt, wenn Firebase-Limits erreicht sind)
+- (Kunden gesperrt, wenn Firebase-Limits erreicht sind)
 - Firebase Auth + Realtime Database
 
 ## Deployment
