@@ -2,11 +2,16 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Badmintonbespannungen</title>
-  <link rel="stylesheet" href="style.css"> <!-- hier wird CSS eingebunden -->
+  <title>Flame Bespannungsservice</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <!-- Hier kommt der Login-Bereich -->
+  <h1>Flame Bespannungsservice</h1>
+
   <div id="login">
     <h2>Login / Registrieren</h2>
     <input type="email" id="email" placeholder="E-Mail">
@@ -14,11 +19,46 @@
     <button onclick="login()">Login / Registrieren</button>
   </div>
 
-  <!-- Bestellformular -->
   <div id="order-form" style="display:none;">
-    <!-- Formularfelder hier einfügen (wie im vorherigen Code) -->
+    <h2>Bestelle deine Bespannung</h2>
+
+    <label>Seitenart:</label>
+    <select id="string-type" onchange="updatePrice()">
+      <option value="gosen">Gosen (CHF 20)</option>
+      <option value="bg65">BG65 (CHF 20)</option>
+      <option value="bg80">BG80 (CHF 23)</option>
+      <option value="aerobite">Aerobite (CHF 23)</option>
+      <option value="custom">Eigene Auswahl (CHF 15)</option>
+    </select>
+
+    <label>Spannung (kg):</label>
+    <input type="number" id="tension" min="8" max="16" step="0.2" value="12">
+
+    <label>Abgabedatum:</label>
+    <input type="date" id="pickup">
+
+    <label>Bemerkungen:</label>
+    <input type="text" id="notes">
+
+    <h3>Bezahloption:</h3>
+    <input type="radio" id="twint" name="payment" value="twint" checked onchange="updatePayment()">
+    <label for="twint">Twint</label><br>
+    <input type="radio" id="cash" name="payment" value="cash" onchange="updatePayment()">
+    <label for="cash">Barzahlung</label><br>
+
+    <div id="payment-section">
+      <h3>Twint-Zahlung:</h3>
+      <a id="twint-link" href="#" target="_blank">
+        <img id="twint-qr" src="images/twint-qr-code.png" alt="Twint QR" width="150">
+      </a>
+    </div>
+
+    <button onclick="submitOrder()">Bestellen</button>
+    <h3 id="total-price"></h3>
   </div>
 
-  <script src="script.js"></script> <!-- hier wird JS eingebunden -->
+  <h2>Aktuelle Anzahl bespannter Rackets: <span id="racket-count">0</span></h2>
+
+  <script src="script.js"></script>
 </body>
 </html>
