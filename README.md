@@ -42,8 +42,8 @@ function login() {
   <input type="text" id="notes">
 
   <h3>Twint-Zahlung:</h3>
-  <a href="DEIN_TWINT_LINK" target="_blank">
-    <img src="twint-qr-code.png" alt="Twint QR">
+  <a href="DEIN_TWINT_LINK" target="_blank"> # Path Twint-QR-Code hinzufügen
+    <img src="twint-qr-code.png" alt="Twint QR"> # Dateiname des Twint-QR-Code-Bildes hinzufügen
   </a>
 
   <button onclick="submitOrder()">Bestellen</button>
