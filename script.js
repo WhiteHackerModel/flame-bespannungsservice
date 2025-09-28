@@ -1,7 +1,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyDU7kEP21xWlS9jWpRlEbE97XbOa-LjUOA",
   authDomain: "flame-bespannungsservice.firebaseapp.com",
-  databaseURL: "...",
+  databaseURL: "https://flame-bespannungsservice-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "flame-bespannungsservice",
   storageBucket: "flame-bespannungsservice.firebasestorage.app",
   messagingSenderId: "1039827014465",
