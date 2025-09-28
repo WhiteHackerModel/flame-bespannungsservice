@@ -30,9 +30,9 @@ function login() {
 
   <label>Spannung / Gewicht:</label>
   <select id="tension">
-    <option>20kg</option>
-    <option>22kg</option>
-    <option>24kg</option>
+    <option>10kg</option>
+    <option>11kg</option>
+    <option>12kg</option>
   </select>
 
   <label>Abholdatum:</label>
