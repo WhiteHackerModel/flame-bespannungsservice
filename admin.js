@@ -1,7 +1,5 @@
-// Firebase Config (wie oben)
 firebase.initializeApp(firebaseConfig);
 
-// Admin Login
 function adminLogin() {
   const email = document.getElementById('admin-email').value;
   const password = document.getElementById('admin-password').value;
@@ -14,7 +12,6 @@ function adminLogin() {
     .catch(err => alert(err.message));
 }
 
-// Bestellungen laden
 function loadOrders() {
   const dbRef = firebase.database().ref('orders');
   dbRef.on('value', snapshot => {
@@ -35,18 +32,15 @@ function loadOrders() {
       row.insertCell(4).innerHTML = `<input type="checkbox" ${o.bespannt?'checked':''} onchange="updateOrder('${id}','bespannt',this.checked)">`;
       row.insertCell(5).innerHTML = `<input type="checkbox" ${o.bezahlt?'checked':''} onchange="updateOrder('${id}','bezahlt',this.checked)">`;
       row.insertCell(6).innerHTML = `<input type="date" value="${o.bespannDatum || ''}" onchange="updateOrder('${id}','bespannDatum',this.value)">`;
-
       row.insertCell(7).innerHTML = `<button onclick="deleteOrder('${id}')">Löschen</button>`;
     }
   });
 }
 
-// Bestellung aktualisieren
 function updateOrder(id, field, value) {
   firebase.database().ref('orders/'+id).update({[field]: value});
 }
 
-// Bestellung löschen
 function deleteOrder(id) {
   if(confirm("Löschen?")) firebase.database().ref('orders/'+id).remove();
 }
