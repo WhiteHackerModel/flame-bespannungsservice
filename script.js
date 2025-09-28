@@ -1,20 +1,41 @@
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "DEIN_API_KEY",
+  authDomain: "DEIN_PROJECT.firebaseapp.com",
+  databaseURL: "https://DEIN_PROJECT.firebaseio.com",
+  projectId: "DEIN_PROJECT",
+  storageBucket: "DEIN_PROJECT.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+
 const prices = { gosen: 20, bg65: 20, bg80: 23, aerobite: 23, custom: 15 };
 
+// Login / Registrierung
 function login() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-
-  if(email && password) {
-    localStorage.setItem('user', email);
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('order-form').style.display = 'block';
-    updatePrice();
-    updatePayment();
-  } else {
-    alert("Bitte E-Mail und Passwort eingeben");
-  }
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(user => showOrderForm(user.user.uid))
+    .catch(err => {
+      if(err.code === 'auth/user-not-found') {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(user => showOrderForm(user.user.uid))
+          .catch(err => alert(err.message));
+      } else alert(err.message);
+    });
 }
 
+function showOrderForm(uid) {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('order-form').style.display = 'block';
+  updatePrice();
+  updatePayment();
+  updateRacketCount();
+}
+
+// Preis aktualisieren
 function updatePrice() {
   const type = document.getElementById('string-type').value;
   const price = prices[type];
@@ -22,6 +43,7 @@ function updatePrice() {
   updatePayment();
 }
 
+// Zahlungsoption
 function updatePayment() {
   const type = document.getElementById('string-type').value;
   const payment = document.querySelector('input[name="payment"]:checked').value;
@@ -34,32 +56,43 @@ function updatePayment() {
   if(payment === 'twint') {
     paymentSection.style.display = 'block';
     link.href = `https://www.twint.ch/payment?amount=${price.toFixed(2)}`;
-    qr.src = `twint-qr-${price}.png`;
+    qr.src = `images/twint-qr-${price}.png`;
   } else {
     paymentSection.innerHTML = "<h3>Bitte bei Abholung bar bezahlen</h3>";
   }
 }
 
+// Bestellung absenden
 function submitOrder() {
+  const user = firebase.auth().currentUser.email;
   const type = document.getElementById('string-type').value;
   const tension = document.getElementById('tension').value;
   const pickup = document.getElementById('pickup').value;
   const notes = document.getElementById('notes').value;
-  const user = localStorage.getItem('user');
   const payment = document.querySelector('input[name="payment"]:checked').value;
 
-  if(!user || !type || !tension || !pickup) {
-    alert("Bitte alle Pflichtfelder ausfüllen");
-    return;
-  }
+  if(!type || !tension || !pickup) return alert("Alle Felder ausfüllen");
 
-  let summary = `Bestellung von ${user}:\n`;
-  summary += `Seitenart: ${type}\n`;
-  summary += `Spannung: ${tension}kg\n`;
-  summary += `Abholdatum: ${pickup}\n`;
-  summary += `Bemerkungen: ${notes}\n`;
-  summary += `Zahlung: ${payment === 'twint' ? 'Twint' : 'Barzahlung'}\n`;
-  summary += `Preis: CHF ${prices[type].toFixed(2)}`;
+  const dbRef = firebase.database().ref('orders');
+  dbRef.push({
+    user, type, tension, pickup, notes,
+    payment,
+    bespannt: false,
+    bezahlt: payment==='twint'?false:true,
+    abgerechnet: false,
+    timestamp: Date.now()
+  }).then(() => alert("Bestellung erfolgreich!"));
 
-  alert(summary);
+  updateRacketCount();
+}
+
+// Anzahl bespannter Rackets anzeigen
+function updateRacketCount() {
+  const dbRef = firebase.database().ref('orders');
+  dbRef.once('value', snapshot => {
+    const orders = snapshot.val();
+    let count = 0;
+    for(let id in orders) if(orders[id].bespannt) count++;
+    document.getElementById('racket-count').innerText = count;
+  });
 }
