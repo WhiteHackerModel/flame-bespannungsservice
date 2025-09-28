@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; padding: 20px; }
+h1, h2 { color: #2c3e50; }
+input, select, button { display: block; margin: 10px 0; padding: 8px; width: 220px; }
+button { cursor: pointer; background-color: #27ae60; color: white; border: none; }
+#payment-section { margin-top: 15px; }
+#twint-qr { display: block; margin-top: 10px; }
