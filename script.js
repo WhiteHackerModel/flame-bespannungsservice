@@ -1,4 +1,3 @@
-// Firebase Config (ersetze DEIN_API_KEY etc. mit deinen Daten)
 const firebaseConfig = {
   apiKey: "DEIN_API_KEY",
   authDomain: "DEIN_PROJECT.firebaseapp.com",
@@ -12,22 +11,40 @@ firebase.initializeApp(firebaseConfig);
 
 const prices = { gosen: 20, bg65: 20, bg80: 23, aerobite: 23, custom: 15 };
 
+// Prüfen, ob Firebase erreichbar ist
+function checkFirebaseLimits() {
+  const dbRef = firebase.database().ref('orders');
+  dbRef.once('value')
+    .then(() => {
+      document.getElementById('login').style.display = 'block';
+    })
+    .catch(err => {
+      if(err.code === 'PERMISSION_DENIED' || err.code === 'NETWORK_ERROR') {
+        document.body.innerHTML = `
+          <h1>Service momentan nicht verfügbar</h1>
+          <p>Die Seite ist für Kunden vorübergehend gesperrt. Admins können weiterhin auf die Admin-Seite zugreifen.</p>
+        `;
+      } else console.error(err);
+    });
+}
+checkFirebaseLimits();
+
 // Login / Registrierung
 function login() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(user => showOrderForm(user.user.uid))
+    .then(user => showOrderForm())
     .catch(err => {
       if(err.code === 'auth/user-not-found') {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => showOrderForm(user.user.uid))
+          .then(user => showOrderForm())
           .catch(err => alert(err.message));
       } else alert(err.message);
     });
 }
 
-function showOrderForm(uid) {
+function showOrderForm() {
   document.getElementById('login').style.display = 'none';
   document.getElementById('order-form').style.display = 'block';
   updatePrice();
@@ -35,7 +52,6 @@ function showOrderForm(uid) {
   updateRacketCount();
 }
 
-// Preis aktualisieren
 function updatePrice() {
   const type = document.getElementById('string-type').value;
   const price = prices[type];
@@ -43,7 +59,6 @@ function updatePrice() {
   updatePayment();
 }
 
-// Zahlungsoption
 function updatePayment() {
   const type = document.getElementById('string-type').value;
   const payment = document.querySelector('input[name="payment"]:checked').value;
@@ -55,14 +70,13 @@ function updatePayment() {
 
   if(payment === 'twint') {
     paymentSection.style.display = 'block';
-    link.href = `#`; // Platzhalter, später echten Twint-Link einfügen
+    link.href = `#`; // Platzhalter
     qr.src = `images/twint-placeholder.png`;
   } else {
     paymentSection.innerHTML = "<h3>Bitte bei Abholung bar bezahlen</h3>";
   }
 }
 
-// Bestellung absenden
 function submitOrder() {
   const user = firebase.auth().currentUser.email;
   const type = document.getElementById('string-type').value;
@@ -87,7 +101,6 @@ function submitOrder() {
   updateRacketCount();
 }
 
-// Anzahl bespannter Rackets anzeigen
 function updateRacketCount() {
   const dbRef = firebase.database().ref('orders');
   dbRef.once('value', snapshot => {
