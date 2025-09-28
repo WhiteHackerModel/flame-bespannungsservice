@@ -1,4 +1,4 @@
-// Firebase Config
+// Firebase Config (ersetze DEIN_API_KEY etc. mit deinen Daten)
 const firebaseConfig = {
   apiKey: "DEIN_API_KEY",
   authDomain: "DEIN_PROJECT.firebaseapp.com",
@@ -55,8 +55,8 @@ function updatePayment() {
 
   if(payment === 'twint') {
     paymentSection.style.display = 'block';
-    link.href = `https://www.twint.ch/payment?amount=${price.toFixed(2)}`;
-    qr.src = `images/twint-qr-${price}.png`;
+    link.href = `#`; // Platzhalter, später echten Twint-Link einfügen
+    qr.src = `images/twint-placeholder.png`;
   } else {
     paymentSection.innerHTML = "<h3>Bitte bei Abholung bar bezahlen</h3>";
   }
@@ -79,6 +79,7 @@ function submitOrder() {
     payment,
     bespannt: false,
     bezahlt: payment==='twint'?false:true,
+    bespannDatum: null,
     abgerechnet: false,
     timestamp: Date.now()
   }).then(() => alert("Bestellung erfolgreich!"));
