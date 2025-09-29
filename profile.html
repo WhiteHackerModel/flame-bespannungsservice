@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Flame — Profil</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>Flame Bespannungsservice</div>
+    <nav>
+      <a href="order.html">Bestellen</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Dein Profil</h2>
+
+      <label>E-Mail</label>
+      <input id="p-email" type="email" disabled />
+
+      <label>Name</label>
+      <input id="p-name" type="text" />
+
+      <label>Telefon (optional)</label>
+      <input id="p-phone" type="text" />
+
+      <div class="row">
+        <button onclick="saveProfile()">Daten speichern</button>
+        <button onclick="sendPasswordReset()">Passwort zurücksetzen</button>
+      </div>
+      <p class="muted">Passwort ändern per E-Mail-Link.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
