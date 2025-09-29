@@ -20,4 +20,4 @@ Kleines Projekt: Website + Admin-Dashboard für Badmintonbespannungen.
 - Twint-Zahlungen: QR/Link später in `updatePayment()` einbauen / ersetzen.
 
 ## Lizenz
-Für private Nutzung, kein Copyright erforderlich. Komerzielle Nutzung nicht gestattet.
+Komerzielle Nutzung nicht gestattet.
