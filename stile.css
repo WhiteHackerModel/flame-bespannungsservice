@@ -1,9 +1,39 @@
-body { font-family: Arial, sans-serif; padding: 20px; }
-h1, h2 { color: #2c3e50; }
-input, select, button { display: block; margin: 10px 0; padding: 8px; width: 220px; }
-button { cursor: pointer; background-color: #27ae60; color: white; border: none; }
-#payment-section { margin-top: 15px; }
-#twint-qr { display: block; margin-top: 10px; }
-table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-th, td { padding: 8px; text-align: left; }
-th { background-color: #2c3e50; color: white; }
+:root {
+  --accent: #27ae60;
+  --dark: #2c3e50;
+  --muted: #666;
+  --card-bg: #fff;
+  --page-bg: #f4f6f8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: Inter, Arial, sans-serif; background: var(--page-bg); color: var(--dark);
+}
+
+.topbar {
+  background: white; display:flex; justify-content:space-between; align-items:center;
+  padding:12px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.topbar nav a { margin-left:12px; color:var(--dark); text-decoration:none; font-weight:600; }
+.topbar nav a:hover { color:var(--accent); }
+
+.center-card { width:360px; margin:60px auto; background:var(--card-bg); padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); text-align:center; }
+.container { max-width:900px; margin:24px auto; padding:12px; display:block; }
+.container-wide { max-width:1100px; margin:24px auto; display:flex; gap:20px; padding:12px; }
+.card { background:var(--card-bg); padding:18px; border-radius:10px; box-shadow:0 3px 10px rgba(0,0,0,0.04); flex:1; }
+.small { width:260px; }
+.payment-card { background:#fafafa; padding:10px; border-radius:8px; margin:10px 0; }
+
+input, select, button { width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #e6e9ee; }
+button { background:var(--accent); color:white; border:none; cursor:pointer; font-weight:600; }
+button:hover { opacity:0.95; }
+.row { display:flex; gap:10px; align-items:center; }
+.row button { flex:1; }
+
+.muted { color:var(--muted); font-size:0.95rem; }
+.small .muted { font-size:0.85rem; }
+
+table { width:100%; border-collapse:collapse; margin-top:12px; }
+table th, table td { padding:8px 6px; border-bottom:1px solid #eee; font-size:0.95rem; }
+table th { background:#fafafa; text-align:left; }
