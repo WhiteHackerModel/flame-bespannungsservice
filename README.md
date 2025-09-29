@@ -1,18 +1,23 @@
 # Flame Bespannungsservice
 
-Website + Admin Dashboard für Badmintonbespannungen.  
+Kleines Projekt: Website + Admin-Dashboard für Badmintonbespannungen.
 
 ## Funktionen
-- Kunden: Login, Bestellung aufgeben, Twint / Barzahlung
-- Admins: Alle Bestellungen einsehen, bearbeiten, löschen
-- Admins können Bespannt, Bezahlt, Datum Bespannung setzen
-- Startseite zeigt aktuelle Anzahl bespannter Rackets
-- (Kunden gesperrt, wenn Firebase-Limits erreicht sind)
-- Firebase Auth + Realtime Database
+- Kunden: Registrierung / Login, Bestellung aufgeben, Twint oder Barzahlung (Platzhalter)
+- Profil: Name, Telefon speichern, Passwort zurücksetzen
+- Admins: Bestellungen sehen, bearbeiten, löschen, Benutzer zu Admins machen
+- Jede Bestellung: eindeutige ID, Preis, Zahlungsstatus, Bespannungsdatum
+- Realtime Database (Firebase) & Authentication
 
 ## Deployment
-- GitHub Repository
-- Netlify für Hosting
+- Dateien ins GitHub-Repo hochladen.
+- Netlify (oder GitHub Pages) für Hosting.
+- Firebase konfigurieren: Authentication (Email/Passwort) + Realtime Database.
+
+## Hinweise
+- Ersetze `firebaseConfig` in `script.js` und `admin.js`.
+- Erstelle initialen Admin entweder direkt in Firebase Auth oder registriere mit `INITIAL_ADMIN_EMAIL`.
+- Twint-Zahlungen: QR/Link später in `updatePayment()` einbauen / ersetzen.
 
 ## Lizenz
 Für private Nutzung, kein Copyright erforderlich. Komerzielle Nutzung nicht gestattet.
