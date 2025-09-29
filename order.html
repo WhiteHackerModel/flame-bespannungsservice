@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Flame Bespannungsservice — Bestellen</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>Flame Bespannungsservice</div>
+    <nav>
+      <a href="profile.html">Profil</a>
+      <a href="#" onclick="logout()">Logout</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="container-wide">
+    <section class="card">
+      <h2>Bestellung aufgeben</h2>
+
+      <label>Seitenart</label>
+      <select id="string-type" onchange="updatePrice()">
+        <option value="gosen">Gosen (CHF 20)</option>
+        <option value="bg65">BG65 (CHF 20)</option>
+        <option value="bg80">BG80 (CHF 23)</option>
+        <option value="aerobite">Aerobite (CHF 23)</option>
+        <option value="custom">Eigene Auswahl (CHF 15)</option>
+      </select>
+
+      <label>Spannung (kg)</label>
+      <input id="tension" type="number" min="8" max="16" step="0.2" value="12"/>
+
+      <label>Abgabedatum</label>
+      <input id="pickup" type="date"/>
+
+      <label>Bemerkungen</label>
+      <input id="notes" type="text" placeholder="z. B. besondere Wünsche"/>
+
+      <h3>Zahlung</h3>
+      <input type="radio" id="pay-twint" name="payment" value="twint" checked onchange="updatePayment()"/>
+      <label for="pay-twint">Twint (QR / Link)</label><br/>
+      <input type="radio" id="pay-cash" name="payment" value="cash" onchange="updatePayment()"/>
+      <label for="pay-cash">Barzahlung bei Abholung</label>
+
+      <div id="payment-section" class="payment-card">
+        <p>Twint (Platzhalter)</p>
+        <a id="twint-link" href="#" target="_blank"><img id="twint-qr" src="images/twint-placeholder.png" alt="Twint QR" width="160"></a>
+      </div>
+
+      <div class="row">
+        <button onclick="submitOrder()">Bestellen</button>
+        <div id="total-price" class="muted"></div>
+      </div>
+    </section>
+
+    <aside class="card small">
+      <h3>Aktuelle Statistik</h3>
+      <p>Bespannt: <strong id="racket-count">0</strong></p>
+      <p>Dein Konto: <span id="user-email">—</span></p>
+      <p>Bestellbeleg: Jede Bestellung erhält eine eindeutige ID & Bestätigung.</p>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
